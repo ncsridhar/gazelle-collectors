@@ -1,4 +1,4 @@
-# gazelle project manifesto
+# Gazelle - project manifesto
 
 Manifesto: Gazelle is a set of libraries and an opinionated framework for conducting a data pipeline. The data pipeline has primarily the 5 objectives. 
 - Ingest
