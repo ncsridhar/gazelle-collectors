@@ -1,5 +1,7 @@
 package com.collector.gazelle.resources;
 
+import java.util.concurrent.ExecutionException;
+
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import com.collector.gazelle.config.GzConfig;
 import com.collector.gazelle.dto.GzEvent;
+import com.collector.gazelle.kafka.GzQueue;
 import com.collector.gazelle.skels.GzParser;
 import com.collector.gazelle.skels.GzTransformer;
 
@@ -23,12 +26,14 @@ public class EventResource extends GzResource {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(EventResource.class);
 	GzConfig gzConfig = null;
+	GzQueue queue = null;
 	
 	public EventResource(){
 	}
 	
-	public EventResource(GzConfig gzConfig) {
+	public EventResource(GzConfig gzConfig, GzQueue queue) {
 		this.gzConfig = gzConfig;
+		this.queue = queue;
 	}
 
 	@POST
@@ -46,9 +51,10 @@ public class EventResource extends GzResource {
 
 	}
 	
-	private void persist(GzEvent event){
+	private void persist(GzEvent event) throws InterruptedException, ExecutionException{
 		
 		//TODO: implement writing to Kafka part here
+		queue.put(event, false);
 		System.out.println("Event details: " + event.toString());
 	}
 }

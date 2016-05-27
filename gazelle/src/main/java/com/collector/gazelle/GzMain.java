@@ -2,6 +2,8 @@ package com.collector.gazelle;
 
 import com.collector.gazelle.config.GzConfig;
 import com.collector.gazelle.config.ServiceConfiguration;
+import com.collector.gazelle.kafka.GzQueue;
+import com.collector.gazelle.kafka.GzQueueKafkaImpl;
 import com.collector.gazelle.resources.EventResource;
 import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.config.Bootstrap;
@@ -12,6 +14,7 @@ import com.yammer.dropwizard.views.ViewBundle;
 public class GzMain extends Service<ServiceConfiguration> {
 
 	private GzConfig gzConfig = new GzConfig();
+	private GzQueue queue = null;
 	
 	public void start(String[] args) throws Exception{
 		new GzMain().run(args);
@@ -28,7 +31,8 @@ public class GzMain extends Service<ServiceConfiguration> {
 	public void run(ServiceConfiguration configuration, Environment env)
 			throws Exception {
 
-		EventResource eventRes = new EventResource(gzConfig);
+		queue = new GzQueueKafkaImpl();
+		EventResource eventRes = new EventResource(gzConfig, queue);
 		env.addResource(eventRes);
 		
 	}
