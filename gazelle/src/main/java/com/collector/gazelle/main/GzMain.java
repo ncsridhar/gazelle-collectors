@@ -1,4 +1,4 @@
-package com.collector.gazelle;
+package com.collector.gazelle.main;
 
 import com.collector.gazelle.config.GzConfig;
 import com.collector.gazelle.config.ServiceConfiguration;

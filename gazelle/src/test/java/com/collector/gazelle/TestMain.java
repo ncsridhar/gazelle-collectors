@@ -1,6 +1,7 @@
 package com.collector.gazelle;
 
 import com.collector.gazelle.config.GzConfig;
+import com.collector.gazelle.main.GzMain;
 
 public class TestMain {
 
