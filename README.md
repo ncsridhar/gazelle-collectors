@@ -38,7 +38,7 @@ Benchmarking:
 
 I used "wrk" to benchmark this on my macbook air with 8gb ram and 2 ghz i7 processor. Kafka and zookeeper running locally. And several other processes running on my laptop simultaneously. <br>
 <br>
-Result: I can process 50TB of data per day per node. Since this solution scales out seamlessly, its quite a practical answer to Bigdata real time event processing.<br>
+Result: I can process 50TB of data per day per node with (<100M events per day). Since this solution scales out seamlessly with additional nodes, its quite a practical answer to Big data real time event processing.<br>
 <br>
 wrk -t12 -c400 -d3s -s post.lua  http://127.0.0.1:8080/event<br>
 <br>
