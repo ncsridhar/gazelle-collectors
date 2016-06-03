@@ -1,2 +1,3 @@
 appconfig:  
   livebrixBaseUrl:  http://myaccount.livebrix.com
+configPath: sourceconfig.yml  
