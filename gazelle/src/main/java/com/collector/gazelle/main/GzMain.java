@@ -30,7 +30,7 @@ public class GzMain extends Service<ServiceConfiguration> {
 	@Override
 	public void run(ServiceConfiguration configuration, Environment env)
 			throws Exception {
-
+        System.out.println("inside run");
 		queue = new GzQueueKafkaImpl();
 		EventResource eventRes = new EventResource(gzConfig, queue);
 		env.addResource(eventRes);
