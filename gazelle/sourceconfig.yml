@@ -1,0 +1,20 @@
+# sourceconfig.yml
+sourceList:
+  - source: master
+    fileRegex: /home/suresh/temp
+    host: master
+    userName: suresh
+    password: root123
+    privateKeyFile: somekey
+    fileType: JSON
+    moveTo: /tmp/done
+  - source: slave
+    fileRegex: /home/suresh/temp
+    host: slave
+    userName: suresh
+    password: root123
+    privateKeyFile: somekey
+    fileType: JSON
+    moveTo: /tmp/done
+
+    
