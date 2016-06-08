@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Timer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -15,6 +16,7 @@ import com.collector.gazelle.kafka.GzQueue;
 import com.collector.gazelle.kafka.GzQueueKafkaImpl;
 import com.collector.gazelle.remoteconnect.DispatcherThread;
 import com.collector.gazelle.remoteconnect.RemoteConnection;
+import com.collector.gazelle.remoteconnect.TimerSchedulerTask;
 import com.collector.gazelle.resources.EventResource;
 import com.fasterxml.jackson.dataformat.yaml.snakeyaml.Yaml;
 import com.yammer.dropwizard.Service;
@@ -56,7 +58,10 @@ public class GzMain extends Service<ServiceConfiguration> {
     	}
     	RemoteSourceConfig remoteSourceConfiguration = yaml.loadAs(in, RemoteSourceConfig.class);
 		List<RemoteSource> remoteSourceList = remoteSourceConfiguration.getSourceList();
-		startDispatcherThread(remoteSourceList);
+		TimerSchedulerTask scheduler = new TimerSchedulerTask(remoteSourceList);
+		Timer timer = new Timer(true);
+		timer.schedule(scheduler, 0, 60*1000);
+		//startDispatcherThread(remoteSourceList);
 		
 		queue = new GzQueueKafkaImpl();
 		EventResource eventRes = new EventResource(gzConfig, queue);
@@ -67,12 +72,13 @@ public class GzMain extends Service<ServiceConfiguration> {
 	public GzConfig getGzConfig() {
 		return gzConfig;
 	}
+	
 
 	public void setGzConfig(GzConfig gzConfig) {
 		this.gzConfig = gzConfig;
 	}
 	
-public void startDispatcherThread(List<RemoteSource> remoteSourceList){
+/*public void startDispatcherThread(List<RemoteSource> remoteSourceList){
 		
 		if(remoteSourceList.size()>0){
 	    	ExecutorService executor = Executors.newFixedThreadPool(5);
@@ -86,6 +92,6 @@ public void startDispatcherThread(List<RemoteSource> remoteSourceList){
 	    	executor.shutdown();
         }
 	}
-	
+	*/
 	
 }
